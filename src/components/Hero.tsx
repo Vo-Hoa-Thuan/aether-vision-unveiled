@@ -115,27 +115,21 @@ export function Hero() {
           </div>
 
           {/* Floating stat pills */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.1, duration: 0.7 }}
+          <div
             className="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2 glass-card rounded-2xl px-4 py-3 border border-border-10"
           >
             <div className="text-xs text-text-muted mb-1">{t("hero.weight")}</div>
             <div className="font-display text-2xl font-semibold text-gradient-aurora">38g</div>
             <div className="text-xs text-text-muted/60 mt-0.5">{t("hero.titanium_frame")}</div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.2, duration: 0.7 }}
+          <div
             className="hidden lg:block absolute right-8 top-1/3 glass-card rounded-2xl px-4 py-3 border border-border-10"
           >
             <div className="text-xs text-text-muted mb-1">{t("hero.battery")}</div>
             <div className="font-display text-2xl font-semibold text-gradient-aurora">16h</div>
             <div className="text-xs text-text-muted/60 mt-0.5">{t("hero.all_day_use")}</div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
