@@ -119,6 +119,9 @@ export function Hero() {
               alt="AETHER Vision AI Smart Glasses"
               width={1536}
               height={1024}
+              fetchPriority="high"
+              loading="eager"
+              decoding="sync"
               className="relative mx-auto w-full max-w-4xl drop-shadow-[0_40px_100px_rgba(109,94,245,0.55)]"
               style={{ filter: "drop-shadow(0 0 80px rgba(0,217,255,0.2))" }}
             />
@@ -130,6 +133,8 @@ export function Hero() {
               src={glasses}
               alt=""
               aria-hidden
+              loading="lazy"
+              decoding="async"
               className="w-full -scale-y-100"
             />
           </div>
