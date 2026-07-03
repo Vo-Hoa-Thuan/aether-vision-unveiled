@@ -6,12 +6,12 @@ import { Hero } from "@/components/Hero";
 import { TrustedBy } from "@/components/TrustedBy";
 import { FutureOfVision } from "@/components/FutureOfVision";
 import { Features } from "@/components/Features";
-const ProductShowcase = lazy(() => import("@/components/ProductShowcase").then(m => ({ default: m.ProductShowcase })));
+import { ProductShowcase } from "@/components/ProductShowcase";
 import { Specifications } from "@/components/Specifications";
-const Gallery = lazy(() => import("@/components/Gallery").then(m => ({ default: m.Gallery })));
-const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({ default: m.Testimonials })));
-const FAQ = lazy(() => import("@/components/FAQ").then(m => ({ default: m.FAQ })));
-const Newsletter = lazy(() => import("@/components/Newsletter").then(m => ({ default: m.Newsletter })));
+import { Gallery } from "@/components/Gallery";
+import { Testimonials } from "@/components/Testimonials";
+import { FAQ } from "@/components/FAQ";
+import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 const ChatWidget = lazy(() => import("@/components/ChatWidget").then(m => ({ default: m.ChatWidget })));
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -91,14 +91,12 @@ function Landing() {
           <TrustedBy />
           <FutureOfVision />
           <Features />
-          <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-text-muted">Loading...</div>}>
-            <ProductShowcase />
-            <Specifications />
-            <Gallery />
-            <Testimonials />
-            <FAQ />
-            <Newsletter />
-          </Suspense>
+          <ProductShowcase />
+          <Specifications />
+          <Gallery />
+          <Testimonials />
+          <FAQ />
+          <Newsletter />
           <Footer />
           <Suspense fallback={null}>
             <ChatWidget />
