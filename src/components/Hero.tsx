@@ -1,21 +1,15 @@
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion } from "motion/react";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
 import glasses from "@/assets/glasses-hero.webp";
 import { useTranslation } from "@/lib/i18n";
 
 export function Hero() {
   const { t } = useTranslation();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
-    <section ref={ref} id="top" className="relative min-h-screen overflow-hidden pt-28 pb-0">
-      {/* Layered aurora */}
+    <section id="top" className="relative min-h-screen overflow-hidden pt-28 pb-0">
+      {/* Aurora - static for zero GPU repaint cost */}
       <div className="aurora" />
-      <div className="aurora opacity-50" style={{ animationDelay: "2s", filter: "blur(80px) hue-rotate(20deg)" }} />
 
       {/* Noise texture */}
       <div className="noise" />
@@ -23,27 +17,12 @@ export function Hero() {
       {/* Grid */}
       <div className="absolute inset-0 grid-bg opacity-25 [mask-image:radial-gradient(ellipse_80%_60%_at_center,black,transparent)]" />
 
-      {/* Animated blobs */}
-      <motion.div
-        className="absolute top-20 -left-32 h-[500px] w-[500px] rounded-full bg-[#6D5EF5]/25 blur-[100px]"
-        animate={{ x: [0, 40, 0], y: [0, 25, 0] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute top-40 -right-32 h-[400px] w-[400px] rounded-full bg-[#00D9FF]/18 blur-[90px]"
-        animate={{ x: [0, -35, 0], y: [0, 30, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[350px] w-[700px] rounded-full bg-[#A855F7]/15 blur-[100px]"
-        animate={{ scaleX: [1, 1.15, 1], scaleY: [1, 0.9, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Static color blobs - no animation to save GPU */}
+      <div className="absolute top-20 -left-32 h-[500px] w-[500px] rounded-full bg-[#6D5EF5]/25 blur-[100px] contain-layout" />
+      <div className="absolute top-40 -right-32 h-[400px] w-[400px] rounded-full bg-[#00D9FF]/18 blur-[90px] contain-layout" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[350px] w-[700px] rounded-full bg-[#A855F7]/15 blur-[100px] contain-layout" />
 
-      <motion.div
-        style={{ y, opacity }}
-        className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-      >
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -108,12 +87,8 @@ export function Hero() {
           <div className="absolute inset-x-0 -top-10 mx-auto h-[350px] w-[65%] rounded-full bg-[#00D9FF]/25 blur-[100px] pointer-events-none" />
           <div className="absolute inset-x-0 top-20 mx-auto h-[200px] w-[50%] rounded-full bg-[#A855F7]/20 blur-[80px] pointer-events-none" />
 
-          {/* Floating product */}
-          <motion.div
-            animate={{ y: [0, -18, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-10"
-          >
+          {/* Floating product - CSS animation is GPU compositor only */}
+          <div className="float-anim relative z-10">
             <img
               src={glasses}
               alt="AETHER Vision AI Smart Glasses"
@@ -125,7 +100,7 @@ export function Hero() {
               className="relative mx-auto w-full max-w-4xl drop-shadow-[0_40px_100px_rgba(109,94,245,0.55)]"
               style={{ filter: "drop-shadow(0 0 80px rgba(0,217,255,0.2))" }}
             />
-          </motion.div>
+          </div>
 
           {/* Reflection */}
           <div className="mx-auto -mt-12 h-36 w-3/4 reveal-mask opacity-20 blur-sm pointer-events-none">
@@ -161,25 +136,16 @@ export function Hero() {
             <div className="font-display text-2xl font-semibold text-gradient-aurora">16h</div>
             <div className="text-xs text-text-muted/60 mt-0.5">{t("hero.all_day_use")}</div>
           </motion.div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 animate-[fadeIn_0.5s_ease_1.5s_forwards]">
         <span className="text-[10px] uppercase tracking-[0.25em] text-text-muted/50">{t("hero.scroll")}</span>
         <div className="h-10 w-6 rounded-full border border-border-15 flex items-start justify-center p-1.5">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-[#6D5EF5] to-[#00D9FF]"
-          />
+          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-[#6D5EF5] to-[#00D9FF] animate-[scrollDot_1.8s_ease-in-out_infinite]" />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

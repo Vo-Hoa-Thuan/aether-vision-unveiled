@@ -2,12 +2,8 @@
 @source "../src";
 @import "tw-animate-css";
 
-/* Base transition for all theme colors */
-*, ::before, ::after {
-  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
-  transition-duration: 400ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* REMOVED: Wildcard transition was causing catastrophic INP on mobile.
+   Transitions are now applied only to specific components via Tailwind classes. */
 
 @custom-variant dark (&:is(.dark *));
 @custom-variant light (&:is(.light *));
@@ -260,7 +256,8 @@
       radial-gradient(40% 30% at 38% 60%, var(--aurora-4) 0%, transparent 60%);
     filter: blur(50px);
     pointer-events: none;
-    will-change: transform;
+    will-change: auto;
+    content-visibility: auto;
   }
 
   .noise {
@@ -392,6 +389,21 @@
     0%, 100% { transform: translateY(0px) rotate(0deg); }
     33%       { transform: translateY(-14px) rotate(0.5deg); }
     66%       { transform: translateY(-8px) rotate(-0.3deg); }
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50%       { transform: translateX(4px); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollDot {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(12px); }
   }
 
   .reveal-mask {

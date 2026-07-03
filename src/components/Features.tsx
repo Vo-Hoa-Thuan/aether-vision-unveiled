@@ -136,10 +136,7 @@ export function Features() {
                 {/* Learn more arrow */}
                 <div className="mt-6 flex items-center gap-1.5 text-xs text-[#6D5EF5] opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                   <span>{t("nav.product")}</span>
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.2, repeat: Infinity }}
-                  >→</motion.span>
+                  <span className="animate-[nudge_1.2s_ease-in-out_infinite]">→</span>
                 </div>
               </div>
             </motion.div>
