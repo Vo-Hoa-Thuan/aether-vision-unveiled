@@ -8,7 +8,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative min-h-screen overflow-hidden pt-28 pb-0">
-      {/* Aurora - static for zero GPU repaint cost */}
+      {/* Aurora - static, no animation to save GPU */}
       <div className="aurora" />
 
       {/* Noise texture */}
@@ -17,10 +17,10 @@ export function Hero() {
       {/* Grid */}
       <div className="absolute inset-0 grid-bg opacity-25 [mask-image:radial-gradient(ellipse_80%_60%_at_center,black,transparent)]" />
 
-      {/* Static color blobs - no animation to save GPU */}
-      <div className="absolute top-20 -left-32 h-[500px] w-[500px] rounded-full bg-[#6D5EF5]/25 blur-[100px] contain-layout" />
-      <div className="absolute top-40 -right-32 h-[400px] w-[400px] rounded-full bg-[#00D9FF]/18 blur-[90px] contain-layout" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[350px] w-[700px] rounded-full bg-[#A855F7]/15 blur-[100px] contain-layout" />
+      {/* Static color blobs */}
+      <div className="absolute top-20 -left-32 h-[500px] w-[500px] rounded-full bg-[#6D5EF5]/25 blur-[100px]" />
+      <div className="absolute top-40 -right-32 h-[400px] w-[400px] rounded-full bg-[#00D9FF]/18 blur-[90px]" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[350px] w-[700px] rounded-full bg-[#A855F7]/15 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Badge */}
@@ -76,18 +76,13 @@ export function Hero() {
         </motion.div>
 
         {/* Product image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.88, y: 60 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mt-16 sm:mt-20"
-        >
+        <div className="relative mt-16 sm:mt-20">
           {/* Multi-layer glow */}
           <div className="absolute inset-x-0 -top-24 mx-auto h-[500px] w-[85%] rounded-full bg-[#6D5EF5]/35 blur-[130px] pointer-events-none" />
           <div className="absolute inset-x-0 -top-10 mx-auto h-[350px] w-[65%] rounded-full bg-[#00D9FF]/25 blur-[100px] pointer-events-none" />
           <div className="absolute inset-x-0 top-20 mx-auto h-[200px] w-[50%] rounded-full bg-[#A855F7]/20 blur-[80px] pointer-events-none" />
 
-          {/* Floating product - CSS animation is GPU compositor only */}
+          {/* Floating product - CSS animation runs on GPU compositor */}
           <div className="float-anim relative z-10">
             <img
               src={glasses}
@@ -114,18 +109,14 @@ export function Hero() {
             />
           </div>
 
-          {/* Floating stat pills */}
-          <div
-            className="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2 glass-card rounded-2xl px-4 py-3 border border-border-10"
-          >
+          {/* Floating stat pills - desktop only, static */}
+          <div className="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2 glass-card rounded-2xl px-4 py-3 border border-border-10">
             <div className="text-xs text-text-muted mb-1">{t("hero.weight")}</div>
             <div className="font-display text-2xl font-semibold text-gradient-aurora">38g</div>
             <div className="text-xs text-text-muted/60 mt-0.5">{t("hero.titanium_frame")}</div>
           </div>
 
-          <div
-            className="hidden lg:block absolute right-8 top-1/3 glass-card rounded-2xl px-4 py-3 border border-border-10"
-          >
+          <div className="hidden lg:block absolute right-8 top-1/3 glass-card rounded-2xl px-4 py-3 border border-border-10">
             <div className="text-xs text-text-muted mb-1">{t("hero.battery")}</div>
             <div className="font-display text-2xl font-semibold text-gradient-aurora">16h</div>
             <div className="text-xs text-text-muted/60 mt-0.5">{t("hero.all_day_use")}</div>
@@ -133,7 +124,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - CSS only */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 animate-[fadeIn_0.5s_ease_1.5s_forwards]">
         <span className="text-[10px] uppercase tracking-[0.25em] text-text-muted/50">{t("hero.scroll")}</span>
         <div className="h-10 w-6 rounded-full border border-border-15 flex items-start justify-center p-1.5">
