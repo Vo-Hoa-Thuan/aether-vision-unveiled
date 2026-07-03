@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
-import glasses from "@/assets/glasses-hero.png";
+import glasses from "@/assets/glasses-hero.webp";
 import { useTranslation } from "@/lib/i18n";
 
 export function Hero() {
