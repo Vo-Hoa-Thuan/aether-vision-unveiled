@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useTranslation } from "@/lib/i18n";
-import detail from "@/assets/glasses-detail.jpg";
+import detail from "@/assets/glasses-detail.webp";
 import { CheckCircle } from "lucide-react";
 
 const highlights = [

@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
 import { useTranslation } from "@/lib/i18n";
-import l1 from "@/assets/lifestyle-1.jpg";
-import l2 from "@/assets/lifestyle-2.jpg";
-import l3 from "@/assets/lifestyle-3.jpg";
-import l4 from "@/assets/lifestyle-4.jpg";
+import l1 from "@/assets/lifestyle-1.webp";
+import l2 from "@/assets/lifestyle-2.webp";
+import l3 from "@/assets/lifestyle-3.webp";
+import l4 from "@/assets/lifestyle-4.webp";
 
 const items = [
   { src: l1, keyName: "caption_1", span: "row-span-2", size: "large" },
