@@ -8,11 +8,11 @@ import { FutureOfVision } from "@/components/FutureOfVision";
 import { Features } from "@/components/Features";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { Specifications } from "@/components/Specifications";
-import { Gallery } from "@/components/Gallery";
-import { Testimonials } from "@/components/Testimonials";
-import { FAQ } from "@/components/FAQ";
-import { Newsletter } from "@/components/Newsletter";
-import { Footer } from "@/components/Footer";
+const Gallery = lazy(() => import("@/components/Gallery").then(m => ({ default: m.Gallery })));
+const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({ default: m.Testimonials })));
+const FAQ = lazy(() => import("@/components/FAQ").then(m => ({ default: m.FAQ })));
+const Newsletter = lazy(() => import("@/components/Newsletter").then(m => ({ default: m.Newsletter })));
+const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.Footer })));
 const ChatWidget = lazy(() => import("@/components/ChatWidget").then(m => ({ default: m.ChatWidget })));
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SkeletonLoader } from "@/components/SkeletonLoader";
@@ -93,11 +93,13 @@ function Landing() {
           <Features />
           <ProductShowcase />
           <Specifications />
-          <Gallery />
-          <Testimonials />
-          <FAQ />
-          <Newsletter />
-          <Footer />
+          <Suspense fallback={null}>
+            <Gallery />
+            <Testimonials />
+            <FAQ />
+            <Newsletter />
+            <Footer />
+          </Suspense>
           <Suspense fallback={null}>
             <ChatWidget />
           </Suspense>
