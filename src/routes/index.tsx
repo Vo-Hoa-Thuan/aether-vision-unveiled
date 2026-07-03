@@ -1,0 +1,108 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect, lazy, Suspense } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { TrustedBy } from "@/components/TrustedBy";
+import { FutureOfVision } from "@/components/FutureOfVision";
+import { Features } from "@/components/Features";
+import { ProductShowcase } from "@/components/ProductShowcase";
+import { Specifications } from "@/components/Specifications";
+import { Gallery } from "@/components/Gallery";
+import { Testimonials } from "@/components/Testimonials";
+import { FAQ } from "@/components/FAQ";
+import { Newsletter } from "@/components/Newsletter";
+import { Footer } from "@/components/Footer";
+const ChatWidget = lazy(() => import("@/components/ChatWidget").then(m => ({ default: m.ChatWidget })));
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { SkeletonLoader } from "@/components/SkeletonLoader";
+import { useScrollTracker, useClickTracker } from "@/hooks/useTracking";
+
+export const Route = createFileRoute("/")(({
+  head: () => ({
+    meta: [
+      { title: "AETHER Vision — See Beyond Reality" },
+      {
+        name: "description",
+        content:
+          "AETHER Vision AI Smart Glasses. Real-time translation, AI assistant, navigation, HD camera, and AR — in a 38-gram titanium frame.",
+      },
+      { property: "og:title", content: "AETHER Vision — See Beyond Reality" },
+      {
+        property: "og:description",
+        content:
+          "AI-powered smart glasses. Real-time translation, navigation, AR — one elegant wearable.",
+      },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+  }),
+  component: Landing,
+} as never));
+
+function Landing() {
+  const [loading, setLoading] = useState(true);
+
+  // Activate tracking hooks
+  useScrollTracker();
+  useClickTracker();
+
+  // Simulate initial load with skeleton
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {loading && (
+          <motion.div
+            key="skeleton"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="fixed inset-0 z-[200]"
+          >
+            <SkeletonLoader />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main
+        className="relative text-text-main min-h-screen overflow-x-hidden"
+        style={{ background: "var(--bg-base)" }}
+      >
+        {/* Scroll progress indicator */}
+        <ScrollProgress />
+
+        {/* Global ambient radial gradient */}
+        <div
+          className="fixed inset-0 pointer-events-none z-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 100% 60% at 50% 0%, rgba(109,94,245,0.12) 0%, transparent 70%), radial-gradient(ellipse 80% 50% at 80% 100%, rgba(0,217,255,0.06) 0%, transparent 60%)",
+          }}
+        />
+
+        <div className="relative z-10">
+          <Navbar />
+          <Hero />
+          <TrustedBy />
+          <FutureOfVision />
+          <Features />
+          <ProductShowcase />
+          <Specifications />
+          <Gallery />
+          <Testimonials />
+          <FAQ />
+          <Newsletter />
+          <Footer />
+          <Suspense fallback={null}>
+            <ChatWidget />
+          </Suspense>
+        </div>
+      </main>
+    </>
+  );
+}
